@@ -7,29 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📚 문제 풀이 애플리케이션</h1>
-            <div class="stats">
-                <div class="stat-box">
-                    <span class="stat-label">풀었음</span>
-                    <span class="stat-value" id="solvedCount">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">모르겠음</span>
-                    <span class="stat-value" id="unsureCount">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">전체</span>
-                    <span class="stat-value" id="totalCount">0</span>
-                </div>
+    <div class="app-container">
+        <!-- 왼쪽: 문제 추가 섹션 -->
+        <aside class="add-section">
+            <div class="section-header">
+                <h2>📋 문제 추가</h2>
             </div>
-        </header>
 
-        <main>
-            <!-- 문제 추가 섹션 -->
-            <section class="add-problem-section">
-                <h2>문제 추가</h2>
+            <div class="add-content">
                 <div class="form-group">
                     <label for="problemText">문제 내용:</label>
                     <textarea id="problemText" placeholder="문제를 입력하세요..."></textarea>
@@ -46,13 +31,42 @@
                     <div id="imagePreview" class="image-preview"></div>
                 </div>
 
-                <button id="addProblemBtn" class="btn btn-primary">문제 추가</button>
-            </section>
+                <button id="addProblemBtn" class="btn btn-primary btn-block">
+                    + 문제 추가
+                </button>
 
-            <!-- 문제 풀이 섹션 -->
-            <section class="problem-section">
+                <div id="problemsList" class="problems-list">
+                    <h3>추가된 문제 목록</h3>
+                    <div id="addedProblems" class="added-problems">
+                        <!-- 추가된 문제들이 여기 표시됨 -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 오른쪽: 공부 섹션 -->
+        <main class="study-section">
+            <div class="section-header">
+                <h2>📚 공부하기</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <span class="stat-label">풀었음</span>
+                        <span class="stat-value" id="solvedCount">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">모르겠음</span>
+                        <span class="stat-value" id="unsureCount">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">전체</span>
+                        <span class="stat-value" id="totalCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="study-content">
                 <div id="problemsContainer" class="problems-container">
-                    <!-- 문제 카드가 여기에 동적으로 추가됩니다 -->
+                    <!-- 공부할 문제가 여기 표시됨 -->
                 </div>
 
                 <div id="completionMessage" class="completion-message hidden">
@@ -60,7 +74,12 @@
                     <p id="completionStats"></p>
                     <button id="restartBtn" class="btn btn-primary">미완료 문제로 다시 시작</button>
                 </div>
-            </section>
+
+                <div id="emptyStudy" class="empty-study hidden">
+                    <p>📭 공부할 문제가 없습니다.</p>
+                    <p>왼쪽에서 문제를 추가해주세요!</p>
+                </div>
+            </div>
         </main>
     </div>
 

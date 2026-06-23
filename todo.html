@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Application</title>
+    <link rel="stylesheet" href="todo-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 My To-Do List</h1>
+            <div class="header-stats">
+                <span class="stat">
+                    <strong id="totalTasks">0</strong> Total
+                </span>
+                <span class="stat">
+                    <strong id="completedTasks">0</strong> Completed
+                </span>
+                <span class="stat">
+                    <strong id="remainingTasks">0</strong> Remaining
+                </span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="taskInput" 
+                        placeholder="Add a new task..." 
+                        class="task-input"
+                    >
+                    <select id="prioritySelect" class="priority-select">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <button id="addTaskBtn" class="btn btn-add">Add Task</button>
+                </div>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="filter-section">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <button class="filter-btn" data-filter="high">High Priority</button>
+                <button class="filter-btn" data-filter="medium">Medium Priority</button>
+                <button class="filter-btn" data-filter="low">Low Priority</button>
+            </section>
+
+            <!-- Tasks List -->
+            <section class="tasks-section">
+                <div id="tasksList" class="tasks-list">
+                    <!-- Tasks will be rendered here -->
+                </div>
+
+                <div id="emptyState" class="empty-state hidden">
+                    <p>📭 No tasks yet. Add one to get started!</p>
+                </div>
+            </section>
+
+            <!-- Actions Section -->
+            <section class="actions-section">
+                <button id="clearCompletedBtn" class="btn btn-secondary">Clear Completed</button>
+                <button id="exportBtn" class="btn btn-secondary">Export Data</button>
+                <button id="importBtn" class="btn btn-secondary">Import Data</button>
+                <button id="clearAllBtn" class="btn btn-danger">Clear All</button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+            </section>
+        </main>
+    </div>
+
+    <script src="todo-script.js"></script>
+</body>
+</html>

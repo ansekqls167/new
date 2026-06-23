@@ -2,13 +2,14 @@
 class ProblemApp {
     constructor() {
         this.problems = this.loadProblems();
-        this.currentIndex = 0;
+        this.currentFilter = 'all';
         this.init();
     }
 
     init() {
         this.setupEventListeners();
-        this.renderProblems();
+        this.renderAddedProblems();
+        this.renderStudyProblems();
         this.updateStats();
     }
 
@@ -60,7 +61,7 @@ class ProblemApp {
             answer: answerText,
             image: null,
             status: 'pending', // pending, solved, unsure
-            isHidden: false
+            isAnswerHidden: true
         };
 
         // 이미지가 있으면 처리
@@ -70,7 +71,8 @@ class ProblemApp {
                 problem.image = event.target.result;
                 this.problems.push(problem);
                 this.saveProblems();
-                this.renderProblems();
+                this.renderAddedProblems();
+                this.renderStudyProblems();
                 this.updateStats();
                 this.clearForm();
             };
@@ -78,7 +80,8 @@ class ProblemApp {
         } else {
             this.problems.push(problem);
             this.saveProblems();
-            this.renderProblems();
+            this.renderAddedProblems();
+            this.renderStudyProblems();
             this.updateStats();
             this.clearForm();
         }
@@ -91,14 +94,51 @@ class ProblemApp {
         document.getElementById('imagePreview').innerHTML = '';
     }
 
-    renderProblems() {
+    // ============ 왼쪽 섹션: 추가된 문제 목록 렌더링 ============
+    renderAddedProblems() {
+        const container = document.getElementById('addedProblems');
+
+        if (this.problems.length === 0) {
+            container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">추가된 문제가 없습니다.</p>';
+            return;
+        }
+
+        container.innerHTML = this.problems.map((problem, index) => {
+            const statusClass = problem.status === 'solved' ? 'solved' : 
+                               problem.status === 'unsure' ? 'unsure' : '';
+            const statusText = problem.status === 'solved' ? '✓' : 
+                              problem.status === 'unsure' ? '?' : '○';
+
+            return `
+                <div class="added-problem-item ${statusClass}">
+                    <span class="added-problem-item-text" title="${this.escapeHtml(problem.text)}">
+                        <strong>${statusText}</strong> ${this.escapeHtml(problem.text.substring(0, 30))}${problem.text.length > 30 ? '...' : ''}
+                    </span>
+                    <button class="added-problem-item-btn" onclick="app.deleteProblem(${problem.id})" title="삭제">×</button>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ============ 오른쪽 섹션: 공부 문제 렌더링 ============
+    renderStudyProblems() {
         const container = document.getElementById('problemsContainer');
         const completionMessage = document.getElementById('completionMessage');
+        const emptyStudy = document.getElementById('emptyStudy');
 
         // 모든 문제가 풀었음 상태인지 확인
         const allSolved = this.problems.length > 0 && this.problems.every(p => p.status === 'solved');
 
-        if (allSolved && this.problems.length > 0) {
+        if (this.problems.length === 0) {
+            container.innerHTML = '';
+            completionMessage.classList.add('hidden');
+            emptyStudy.classList.remove('hidden');
+            return;
+        }
+
+        emptyStudy.classList.add('hidden');
+
+        if (allSolved) {
             container.innerHTML = '';
             completionMessage.classList.remove('hidden');
             const solvedCount = this.problems.filter(p => p.status === 'solved').length;
@@ -119,43 +159,45 @@ class ProblemApp {
                                problem.status === 'unsure' ? 'status-unsure' : 'status-pending';
 
             return `
-                <div class="problem-card ${statusClass} ${problem.isHidden ? 'hidden' : ''}">
+                <div class="problem-card ${statusClass}">
                     <div class="problem-header">
                         <span class="problem-status ${statusLabel}">${statusText}</span>
-                        <button class="btn btn-danger btn-small" onclick="app.deleteProblem(${problem.id})">삭제</button>
                     </div>
 
                     <div class="problem-content">
-                        <div class="problem-text ${problem.isHidden ? 'hidden' : ''}">
+                        <div class="problem-text">
                             ${this.escapeHtml(problem.text)}
                         </div>
                         ${problem.image ? `
-                            <div class="problem-image ${problem.isHidden ? 'hidden' : ''}">
+                            <div class="problem-image">
                                 <img src="${problem.image}" alt="문제 이미지">
                             </div>
                         ` : ''}
                     </div>
 
-                    <div class="problem-answer ${problem.isHidden ? 'hidden' : ''}">
-                        <div class="answer-label">정답:</div>
+                    <div class="problem-answer ${problem.isAnswerHidden ? 'hidden' : ''}">
+                        <div class="answer-label">✓ 정답:</div>
                         <div class="answer-text">${this.escapeHtml(problem.answer)}</div>
                     </div>
 
                     <div class="problem-buttons">
-                        <button class="btn btn-secondary btn-small" onclick="app.toggleHide(${problem.id})">
-                            ${problem.isHidden ? '보이기' : '숨기기'}
+                        <button class="btn btn-secondary btn-small" onclick="app.toggleAnswerHide(${problem.id})">
+                            ${problem.isAnswerHidden ? '정답 보기' : '정답 숨기기'}
                         </button>
                         <button class="btn btn-primary btn-small" onclick="app.showAnswer(${problem.id})">
-                            정답 보기
+                            정답 표시
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="app.deleteProblem(${problem.id})">
+                            삭제
                         </button>
                     </div>
 
                     <div class="problem-buttons-action">
                         <button class="btn btn-success btn-small" onclick="app.markSolved(${problem.id})">
-                            풀었음 ✓
+                            ✓ 풀었음
                         </button>
                         <button class="btn btn-secondary btn-small" onclick="app.markUnsure(${problem.id})">
-                            모르겠음
+                            ? 모르겠음
                         </button>
                     </div>
                 </div>
@@ -163,21 +205,21 @@ class ProblemApp {
         }).join('');
     }
 
-    toggleHide(id) {
+    toggleAnswerHide(id) {
         const problem = this.problems.find(p => p.id === id);
         if (problem) {
-            problem.isHidden = !problem.isHidden;
+            problem.isAnswerHidden = !problem.isAnswerHidden;
             this.saveProblems();
-            this.renderProblems();
+            this.renderStudyProblems();
         }
     }
 
     showAnswer(id) {
         const problem = this.problems.find(p => p.id === id);
         if (problem) {
-            problem.isHidden = false;
+            problem.isAnswerHidden = false;
             this.saveProblems();
-            this.renderProblems();
+            this.renderStudyProblems();
         }
     }
 
@@ -186,7 +228,8 @@ class ProblemApp {
         if (problem) {
             problem.status = 'solved';
             this.saveProblems();
-            this.renderProblems();
+            this.renderAddedProblems();
+            this.renderStudyProblems();
             this.updateStats();
         }
     }
@@ -196,7 +239,8 @@ class ProblemApp {
         if (problem) {
             problem.status = 'unsure';
             this.saveProblems();
-            this.renderProblems();
+            this.renderAddedProblems();
+            this.renderStudyProblems();
             this.updateStats();
         }
     }
@@ -205,32 +249,34 @@ class ProblemApp {
         if (confirm('이 문제를 삭제하시겠습니까?')) {
             this.problems = this.problems.filter(p => p.id !== id);
             this.saveProblems();
-            this.renderProblems();
+            this.renderAddedProblems();
+            this.renderStudyProblems();
             this.updateStats();
         }
     }
 
     restartWithUnsolved() {
-        const unsolved = this.problems.filter(p => p.status !== 'solved');
-        if (unsolved.length === 0) {
+        const unsolvedProblems = this.problems.filter(p => p.status !== 'solved');
+        if (unsolvedProblems.length === 0) {
             alert('모든 문제를 완료했습니다!');
             return;
         }
 
-        // 미해결 문제들을 섞기
-        const shuffled = [...unsolved].sort(() => Math.random() - 0.5);
+        // 미해결 문제들을 섞기 (shuffle)
+        const shuffled = unsolvedProblems.sort(() => Math.random() - 0.5);
         
         // 상태 리셋 (solved 유지)
         this.problems = this.problems.map(p => {
             if (p.status === 'solved') {
                 return p;
             } else {
-                return { ...p, status: 'pending', isHidden: false };
+                return { ...p, status: 'pending', isAnswerHidden: true };
             }
         });
 
         this.saveProblems();
-        this.renderProblems();
+        this.renderAddedProblems();
+        this.renderStudyProblems();
         this.updateStats();
     }
 

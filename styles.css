@@ -8,73 +8,75 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px;
 }
 
-.container {
-    max-width: 1000px;
+.app-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    max-width: 1400px;
     margin: 0 auto;
+    min-height: 100vh;
+}
+
+/* ============ 섹션 공통 스타일 ============ */
+.add-section,
+.study-section {
     background: white;
     border-radius: 15px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-header {
+.section-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 30px;
+    padding: 25px;
     text-align: center;
 }
 
-header h1 {
-    margin-bottom: 20px;
-    font-size: 2.5em;
+.section-header h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
 }
 
 .stats {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
 }
 
 .stat-box {
     background: rgba(255, 255, 255, 0.2);
-    padding: 15px 25px;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
     backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 120px;
+    min-width: 100px;
 }
 
 .stat-label {
-    font-size: 0.9em;
+    font-size: 0.85em;
     opacity: 0.9;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 
 .stat-value {
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bold;
 }
 
-main {
-    padding: 30px;
-}
-
-section {
-    margin-bottom: 40px;
-}
-
-section h2 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 1.8em;
-    border-bottom: 3px solid #667eea;
-    padding-bottom: 10px;
+/* ============ 왼쪽: 문제 추가 섹션 ============ */
+.add-content {
+    padding: 25px;
+    overflow-y: auto;
+    flex: 1;
 }
 
 .form-group {
@@ -86,6 +88,7 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
     color: #333;
+    font-size: 0.95em;
 }
 
 input[type="text"],
@@ -110,12 +113,12 @@ textarea:focus {
 
 textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 80px;
 }
 
 .image-preview {
     margin-top: 10px;
-    max-width: 300px;
+    max-width: 200px;
     border-radius: 8px;
     overflow: hidden;
 }
@@ -126,6 +129,7 @@ textarea {
     border: 2px solid #e0e0e0;
 }
 
+/* ============ 버튼 스타일 ============ */
 .btn {
     padding: 12px 30px;
     border: none;
@@ -152,6 +156,7 @@ textarea {
     background: #f5f5f5;
     color: #333;
     border: 2px solid #ddd;
+    font-size: 0.9em;
 }
 
 .btn-secondary:hover {
@@ -162,6 +167,7 @@ textarea {
 .btn-success {
     background: #4caf50;
     color: white;
+    font-size: 0.9em;
 }
 
 .btn-success:hover {
@@ -172,6 +178,7 @@ textarea {
 .btn-danger {
     background: #f44336;
     color: white;
+    font-size: 0.9em;
 }
 
 .btn-danger:hover {
@@ -179,9 +186,84 @@ textarea {
     transform: translateY(-2px);
 }
 
+.btn-block {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* ============ 추가된 문제 목록 ============ */
+.problems-list {
+    margin-top: 30px;
+    border-top: 2px solid #e0e0e0;
+    padding-top: 20px;
+}
+
+.problems-list h3 {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.added-problems {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.added-problem-item {
+    background: #f9f9f9;
+    border-left: 4px solid #667eea;
+    padding: 12px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.added-problem-item.solved {
+    border-left-color: #4caf50;
+    background: #f0f7f0;
+}
+
+.added-problem-item.unsure {
+    border-left-color: #ff9800;
+    background: #fff8f0;
+}
+
+.added-problem-item-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.added-problem-item-btn {
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 5px 10px;
+    transition: all 0.3s;
+}
+
+.added-problem-item-btn:hover {
+    transform: scale(1.2);
+}
+
+/* ============ 오른쪽: 공부 섹션 ============ */
+.study-content {
+    padding: 25px;
+    overflow-y: auto;
+    flex: 1;
+}
+
 .problems-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
@@ -189,7 +271,7 @@ textarea {
     background: #f9f9f9;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     transition: all 0.3s;
     position: relative;
 }
@@ -209,11 +291,6 @@ textarea {
     border-color: #ff9800;
 }
 
-.problem-card.hidden {
-    background: #f5f5f5;
-    border-color: #999;
-}
-
 .problem-header {
     display: flex;
     justify-content: space-between;
@@ -223,7 +300,7 @@ textarea {
 
 .problem-status {
     display: inline-block;
-    padding: 5px 15px;
+    padding: 6px 16px;
     border-radius: 20px;
     font-size: 0.85em;
     font-weight: 600;
@@ -246,20 +323,19 @@ textarea {
 }
 
 .problem-content {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .problem-text {
-    font-size: 1.1em;
-    line-height: 1.6;
+    font-size: 1.15em;
+    line-height: 1.7;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     word-wrap: break-word;
-}
-
-.problem-text.hidden {
-    filter: blur(5px);
-    user-select: none;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
 }
 
 .problem-image {
@@ -273,26 +349,32 @@ textarea {
     border: 2px solid #ddd;
 }
 
-.problem-image.hidden img {
-    filter: blur(10px);
-}
-
 .problem-answer {
     background: white;
-    border: 2px solid #ddd;
+    border: 2px solid #4caf50;
     border-radius: 8px;
     padding: 15px;
     margin: 15px 0;
+    transition: all 0.3s;
 }
 
 .problem-answer.hidden {
-    display: none;
+    background: #f5f5f5;
+    border: 2px dashed #999;
+    color: #999;
+}
+
+.problem-answer.hidden .answer-text {
+    filter: blur(8px);
+    user-select: none;
+    cursor: not-allowed;
 }
 
 .answer-label {
     font-weight: 600;
-    color: #667eea;
+    color: #4caf50;
     margin-bottom: 8px;
+    font-size: 0.9em;
 }
 
 .answer-text {
@@ -300,15 +382,16 @@ textarea {
     color: #2e7d32;
     word-wrap: break-word;
     padding: 10px;
-    background: #f0f0f0;
+    background: #f0f7f0;
     border-radius: 4px;
+    font-weight: 500;
 }
 
 .problem-buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .problem-buttons-action {
@@ -319,9 +402,10 @@ textarea {
 
 .btn-small {
     padding: 10px 15px;
-    font-size: 0.9em;
+    font-size: 0.85em;
 }
 
+/* ============ 완료 메시지 ============ */
 .completion-message {
     text-align: center;
     padding: 60px 30px;
@@ -332,37 +416,83 @@ textarea {
 
 .completion-message h2 {
     color: #2e7d32;
-    font-size: 2.5em;
+    font-size: 2.2em;
     margin-bottom: 20px;
-    border: none;
 }
 
 .completion-message p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #558b2f;
     margin-bottom: 30px;
 }
 
-.hidden {
-    display: none;
+/* ============ 빈 상태 ============ */
+.empty-study {
+    text-align: center;
+    padding: 60px 30px;
+    color: #999;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
+.empty-study p {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+/* ============ 유틸리티 ============ */
+.hidden {
+    display: none !important;
+}
+
+/* ============ 반응형 디자인 ============ */
+@media (max-width: 1024px) {
+    .app-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
     .problems-container {
         grid-template-columns: 1fr;
     }
 
-    header h1 {
-        font-size: 1.8em;
+    .section-header h2 {
+        font-size: 1.5em;
     }
 
-    .stats {
-        flex-direction: column;
+    .stat-box {
+        min-width: 90px;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 640px) {
+    .app-container {
+        padding: 5px;
+    }
+
+    .add-content,
+    .study-content {
+        padding: 15px;
+    }
+
+    .section-header {
+        padding: 15px;
     }
 
     .problem-buttons,
     .problem-buttons-action {
         grid-template-columns: 1fr;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .problem-card {
+        padding: 15px;
+    }
+
+    .section-header h2 {
+        font-size: 1.3em;
     }
 }

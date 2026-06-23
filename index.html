@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 풀이 애플리케이션</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 문제 풀이 애플리케이션</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">풀었음</span>
+                    <span class="stat-value" id="solvedCount">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">모르겠음</span>
+                    <span class="stat-value" id="unsureCount">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">전체</span>
+                    <span class="stat-value" id="totalCount">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- 문제 추가 섹션 -->
+            <section class="add-problem-section">
+                <h2>문제 추가</h2>
+                <div class="form-group">
+                    <label for="problemText">문제 내용:</label>
+                    <textarea id="problemText" placeholder="문제를 입력하세요..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="answerText">정답:</label>
+                    <input type="text" id="answerText" placeholder="정답을 입력하세요...">
+                </div>
+
+                <div class="form-group">
+                    <label for="imageInput">이미지:</label>
+                    <input type="file" id="imageInput" accept="image/*">
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <button id="addProblemBtn" class="btn btn-primary">문제 추가</button>
+            </section>
+
+            <!-- 문제 풀이 섹션 -->
+            <section class="problem-section">
+                <div id="problemsContainer" class="problems-container">
+                    <!-- 문제 카드가 여기에 동적으로 추가됩니다 -->
+                </div>
+
+                <div id="completionMessage" class="completion-message hidden">
+                    <h2>🎉 모든 문제를 완료했습니다!</h2>
+                    <p id="completionStats"></p>
+                    <button id="restartBtn" class="btn btn-primary">미완료 문제로 다시 시작</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

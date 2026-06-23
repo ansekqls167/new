@@ -1,0 +1,368 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px 25px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+main {
+    padding: 30px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+section h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.8em;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.image-preview {
+    margin-top: 10px;
+    max-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.image-preview img {
+    width: 100%;
+    height: auto;
+    border: 2px solid #e0e0e0;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: #f5f5f5;
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background: #e8e8e8;
+    border-color: #999;
+}
+
+.btn-success {
+    background: #4caf50;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #da190b;
+    transform: translateY(-2px);
+}
+
+.problems-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 20px;
+}
+
+.problem-card {
+    background: #f9f9f9;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.problem-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-color: #667eea;
+}
+
+.problem-card.solved {
+    background: #e8f5e9;
+    border-color: #4caf50;
+}
+
+.problem-card.unsure {
+    background: #fff3e0;
+    border-color: #ff9800;
+}
+
+.problem-card.hidden {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+.problem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.problem-status {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-solved {
+    background: #c8e6c9;
+    color: #2e7d32;
+}
+
+.status-unsure {
+    background: #ffe0b2;
+    color: #e65100;
+}
+
+.problem-content {
+    margin-bottom: 15px;
+}
+
+.problem-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.problem-text.hidden {
+    filter: blur(5px);
+    user-select: none;
+}
+
+.problem-image {
+    margin: 15px 0;
+}
+
+.problem-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+.problem-image.hidden img {
+    filter: blur(10px);
+}
+
+.problem-answer {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.problem-answer.hidden {
+    display: none;
+}
+
+.answer-label {
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 8px;
+}
+
+.answer-text {
+    font-size: 1.1em;
+    color: #2e7d32;
+    word-wrap: break-word;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.problem-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.problem-buttons-action {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-small {
+    padding: 10px 15px;
+    font-size: 0.9em;
+}
+
+.completion-message {
+    text-align: center;
+    padding: 60px 30px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: 12px;
+    border: 3px dashed #4caf50;
+}
+
+.completion-message h2 {
+    color: #2e7d32;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    border: none;
+}
+
+.completion-message p {
+    font-size: 1.2em;
+    color: #558b2f;
+    margin-bottom: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .problems-container {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+
+    .problem-buttons,
+    .problem-buttons-action {
+        grid-template-columns: 1fr;
+    }
+}
